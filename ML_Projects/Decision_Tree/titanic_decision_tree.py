@@ -1,6 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import (accuracy_score, precision_score, recall_score, f1_score, confusion_matrix)
 from sklearn import tree
@@ -55,3 +55,6 @@ tree.plot_tree(classifier,filled=True,
     fontsize=10,
     impurity=True)
 plt.show()
+
+final_Cross_score = cross_val_score(classifier, X_train, y_train, cv = 5, scoring="accuracy")
+print(final_Cross_score)

@@ -1,7 +1,7 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
@@ -40,3 +40,6 @@ print("Accuracy:", accuracy_score(y_test, logi_prediction))
 # sns.barplot(x=importance, y=features)
 # plt.title("Feature Importance (Logistic Regression Coefficients)")
 # plt.show()
+
+final_Cross_score = cross_val_score(logi_model, X_train, y_train, cv = 5, scoring="accuracy")
+print(final_Cross_score)
