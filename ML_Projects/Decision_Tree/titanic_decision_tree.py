@@ -10,6 +10,7 @@ pd.set_option('display.max_columns', None)
 # print(df.head())
 # print(df.shape)
 # print(df.columns)
+print(df['Name'].unique())
 
 input_columns=df[["Pclass","Sex", "Age", "Fare"]].copy()
 target_column=df["Survived"]
@@ -20,7 +21,7 @@ input_columns['Sex'] = label_encoder_object.fit_transform(input_columns['Sex'])
 # null check
 # print(input_columns.isnull().sum())
 # print(input_columns[:10])
-input_columns['Age']=input_columns['Age'].fillna(input_columns['Age'].mean())
+input_columns['Age']=input_columns['Age'].fillna(input_columns['Age'].median())
 # print(input_columns[:10])
 # print(input_columns.isnull().sum())
 
