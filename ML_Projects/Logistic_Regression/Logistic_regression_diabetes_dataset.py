@@ -47,3 +47,4 @@ print(final_Cross_score)
 
 with open("logistic_trained_csv_model.pkl","wb") as file_obj:
     pickle.dump(logi_model, file_obj)
+

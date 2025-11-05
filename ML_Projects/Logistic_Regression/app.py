@@ -50,6 +50,5 @@ def logistics_prediction():
     return jsonify({'prediction': predictions.tolist()})
     # return jsonify({"message": "Flask is working!"})
 
-
 if __name__ == "__main__":
     my_app.run(debug=True)
