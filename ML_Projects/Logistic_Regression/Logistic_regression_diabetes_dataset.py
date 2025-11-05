@@ -5,9 +5,10 @@ from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
+import pickle
 
 diabetes_df = pd.read_csv("diabetes.csv")
-# print(diabetes_df.dtypes)
+print(diabetes_df.dtypes)
 
 corr = diabetes_df.corr()
 
@@ -43,3 +44,6 @@ print("Accuracy:", accuracy_score(y_test, logi_prediction))
 
 final_Cross_score = cross_val_score(logi_model, X_train, y_train, cv = 5, scoring="accuracy")
 print(final_Cross_score)
+
+with open("logistic_trained_csv_model.pkl","wb") as file_obj:
+    pickle.dump(logi_model, file_obj)
