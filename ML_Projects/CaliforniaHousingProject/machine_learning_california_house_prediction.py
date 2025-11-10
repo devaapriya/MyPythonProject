@@ -50,3 +50,5 @@ rndm_model.fit(X_train, y_train)
 y_pred_random = rndm_model.predict(X_test)
 r2_score_random = r2_score(y_test, y_pred_random)
 print("r2_score_random ",r2_score_random)
+
+
