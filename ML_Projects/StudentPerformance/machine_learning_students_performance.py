@@ -16,15 +16,15 @@ df=pd.read_csv('StudentsPerformance.csv')
 df.head()
 
 # df['total_score']=df['math score']+df['reading score']+df['writing score']
-df
+# df
 
 # df.drop(['math score', 'reading score','writing score'], axis=1, inplace=True)
 
-df
+# df
 
 df['gender']=df['gender'].map({'female':0,'male':1})
 
-df
+# df
 
 df['race/ethnicity'].value_counts()
 
