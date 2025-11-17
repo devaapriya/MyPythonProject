@@ -47,11 +47,11 @@ print("clus_char\n",clus_char)
 print("clus size ", df['clusters'].value_counts())
 print(df.head())
 plt.figure(figsize=(10,6))
-plt.scatter(df['Age'],
+plt.scatter(df['Annual Income (k$)'],
             df['Spending Score (1-100)'],
             c=df['clusters'],
             s=50)
-plt.xlabel('Age')
+plt.xlabel('Annual Income (k$)')
 plt.ylabel('Spending Score (1-100)')
 plt.title('Customer Segment')
 plt.show()
