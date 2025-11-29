@@ -1,0 +1,25 @@
+Support Vector Machine
+
+Layer :
+SVR - REgression
+SVC - Classification
+
+Supervised Learning Algo
+
+Important:
+1. Margin
+2. Support Vector
+3. Hyperplane
+4. Kernel - RBF - Polynomial
+4.1 Choosing the Kernel
+    We cant decide the kernel by just knowing the data
+    Start with basic linear kernel and go with the rest
+    To know best - use Hyperparameter tuning (Grid Search and Random search)
+
+Best for Classification
+Used when data is non-linear
+Mostly used in High Dimensions
+Example
+- Image recognition
+- Spam Detection
+-
