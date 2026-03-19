@@ -11,29 +11,29 @@ scaler = StandardScaler()
 df_scaled = scaler.fit_transform(df)
 # print(df_scaled[:5])
 
-# inertia = []
-#
-# for k in range(1,11):
-#     kmeans = KMeans(n_clusters=k, random_state=0)
-#     kmeans.fit(df_scaled)
-#     inertia.append(kmeans.inertia_)
-#
-# print("inertia ",inertia)
-#
-# from sklearn.metrics import silhouette_score
-#
-# for k in range(2, 11):
-#     kmeans = KMeans(n_clusters=k, random_state=42)
-#     labels = kmeans.fit_predict(df_scaled)
-#     score = silhouette_score(df_scaled, labels)
-#     print(f"k = {k}, Silhouette Score = {score}")
-#
-# plt.figure(figsize=(10,6))
-# plt.plot(range(1,11), inertia, marker='o')
-# plt.xlabel('No. of Cluster')
-# plt.ylabel('Inertia')
-# plt.title('Elbow Method')
-# plt.show()
+inertia = []
+
+for k in range(1,11):
+    kmeans = KMeans(n_clusters=k, random_state=0)
+    kmeans.fit(df_scaled)
+    inertia.append(kmeans.inertia_)
+
+print("inertia ",inertia)
+
+from sklearn.metrics import silhouette_score
+
+for k in range(2, 11):
+    kmeans = KMeans(n_clusters=k, random_state=42)
+    labels = kmeans.fit_predict(df_scaled)
+    score = silhouette_score(df_scaled, labels)
+    print(f"k = {k}, Silhouette Score = {score}")
+
+plt.figure(figsize=(10,6))
+plt.plot(range(1,11), inertia, marker='o')
+plt.xlabel('No. of Cluster')
+plt.ylabel('Inertia')
+plt.title('Elbow Method')
+plt.show()
 
 kmeans = KMeans(n_clusters=5)
 kmeans.fit(df_scaled)
