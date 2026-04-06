@@ -1,1 +1,6 @@
 streamlit
+openai
+python-dotenv
+gspread
+oauth2client
+pillow
