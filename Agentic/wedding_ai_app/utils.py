@@ -20,13 +20,13 @@ def generate_wish(message, mode, recipient):
         context = "for the couple"
 
     if mode == "💌 Emotional":
-        prompt = f"Write a heartfelt emotional wedding wish in 2-3 lines {context}: {message}"
+        prompt = f"Write a heartfelt emotional wedding wish in 2-3 lines. Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
 
     elif mode == "😂 Funny":
-        prompt = f"Write a light funny wedding wish in 2-3 lines {context}: {message}"
+        prompt = f"Write a light funny wedding wish in 2-3 lines.Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
 
     elif mode == "🪔 Traditional":
-        prompt = f"Write a traditional Indian wedding blessing in 2-3 lines {context}: {message}"
+        prompt = f"Write a traditional Indian wedding blessing in 2-3 lines.Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
 
     else:
         return message  # no AI
