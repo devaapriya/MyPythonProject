@@ -74,11 +74,11 @@ if st.button("Generate Wish ✨"):
 
         with col1:
             # st.link_button("📤 Share on WhatsApp", whatsapp_url)
-            st.image("assets/whatsapp.png", width=80)
+            st.image("./assets/whatsapp.png", width=80)
             st.link_button("Share on WhatsApp", whatsapp_url)
 
         with col2:
-            st.image("assets/instagram.png", width=80)
+            st.image("./assets/instagram.png", width=80)
             with open(image_path, "rb") as file:
                 st.download_button(
                     "Download for Instagram",
