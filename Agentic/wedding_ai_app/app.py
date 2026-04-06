@@ -1,11 +1,13 @@
 import streamlit as st
 from dotenv import load_dotenv
+import os
 
 load_dotenv()
 
 from utils import generate_wish, save_data, save_to_sheets, create_wish_image
 import urllib.parse
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 st.set_page_config(page_title="Test App", layout="centered")
 
@@ -74,11 +76,13 @@ if st.button("Generate Wish ✨"):
 
         with col1:
             # st.link_button("📤 Share on WhatsApp", whatsapp_url)
-            st.image("./assets/whatsapp.png", width=80)
+            whatsapp_image_path = os.path.join(BASE_DIR, "assets", "whatsapp.png")
+            st.image(whatsapp_image_path, width=80)
             st.link_button("Share on WhatsApp", whatsapp_url)
 
         with col2:
-            st.image("./assets/instagram.png", width=80)
+            insta_image_path = os.path.join(BASE_DIR, "assets", "instagram.png")
+            st.image(insta_image_path, width=80)
             with open(image_path, "rb") as file:
                 st.download_button(
                     "Download for Instagram",

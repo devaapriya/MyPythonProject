@@ -8,6 +8,7 @@ import textwrap
 import streamlit as st
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 def generate_wish(message, mode, recipient):
 
@@ -92,11 +93,11 @@ def create_wish_image(name, message, recipient):
 
     # Select background
     if recipient == "👰 Bride":
-        bg_path = "./assets/bride.jpg"
+        bg_path = os.path.join(BASE_DIR, "assets", "bride.jpg")
     elif recipient == "🤵 Groom":
-        bg_path = "./assets/groom.jpg"
+        bg_path = os.path.join(BASE_DIR, "assets", "groom.jpg")
     else:
-        bg_path = "./assets/couple.jpg"
+        bg_path = os.path.join(BASE_DIR, "assets", "couple.jpg")
 
     img = Image.open(bg_path).convert("RGBA")
     img = img.resize((800, 1000))
