@@ -113,7 +113,7 @@ def create_wish_image(name, message, recipient):
 
     # Font
     try:
-        font = ImageFont.truetype(font_path, 60)
+        font = ImageFont.truetype(font_path, 40)
     except:
         font = ImageFont.load_default()
 
