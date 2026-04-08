@@ -1,34 +1,99 @@
 import streamlit as st
 from dotenv import load_dotenv
 import os
+import base64
 
 load_dotenv()
 
-from utils import generate_wish, save_data, save_to_sheets, create_wish_image
-import urllib.parse
+from utils import generate_wish, save_to_sheets, create_wish_image
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-st.set_page_config(page_title="Test App", layout="centered")
+def get_base64(file_path):
+    with open(file_path, "rb") as f:
+        return base64.b64encode(f.read()).decode()
 
-st.title("💍 Wedding Wish AI App (Test)")
+bg_image = get_base64(os.path.join(BASE_DIR, "assets", "invite_bg.jpg"))
 
-name = st.text_input("Enter your name")
-
-recipient = st.radio(
-    "Send my wishes to ",
-    ["👰 Bride", "🤵 Groom", "💑 Couple"]
+st.set_page_config(
+    page_title="AI Wedding Wish Generator 💍",
+    page_icon="💍",
+    layout="centered"
 )
 
-mode = st.radio(
-    "Choose your wish style",
-    ["💌 Emotional", "😂 Funny", "🪔 Traditional", "✍️ My Own Wish"]
-)
-message = mode
-if mode == "✍️ My Own Wish" :
-    message = st.text_area("Write your message")
+# 🎨 Custom background
+st.markdown(f"""
+<style>
+[data-testid="stAppViewContainer"] {{
+    background-image: url("data:image/jpg;base64,{bg_image}");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}}
+[data-testid="stAppViewContainer"]::before {{
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 240, 245, 0.75);
+    z-index: -1;
+}}
+body {{
+    font-size: 18px;
+    line-height: 1.6;
+    color: #2c2c2c !important;
+}}
+p, div, span, label {{
+    font-size: 18px !important;
+    color: #2c2c2c !important;
+}}
+h1 {{ font-size: 2.5rem; color: #b03060 !important; font-weight: 700; }}
+h2 {{ font-size: 2rem; color: #b03060 !important; }}
+h3 {{ font-size: 1.5rem; color: #b03060 !important; }}
+input, textarea {{ font-size: 16px !important; }}
+.stButton > button {{
+    background-color: #ff4b6e !important;
+    color: white !important;
+    border-radius: 12px;
+    font-weight: 600;
+    border: none;
+    padding: 10px 18px;
+    font-size: 16px;
+}}
+.stButton > button:hover {{ background-color: #e8435f !important; }}
+label {{ font-weight: 600; }}
+</style>
+""", unsafe_allow_html=True)
 
-if st.button("Generate Wish ✨"):
+st.markdown("""
+<h1 style='text-align: center; color: #d6336c;'>
+💍 Shabu ❤️ Aishu Wedding Wishes
+</h1>
+<p style='text-align: center;'>
+Create a magical AI-powered wish ✨
+</p>
+""", unsafe_allow_html=True)
+
+with st.container():
+    st.markdown("### ✨ Create Your Wish")
+    name = st.text_input("Enter your name")
+
+    recipient = st.radio(
+        "Send my wishes to ",
+        ["👰 Bride", "🤵 Groom", "💑 Couple"]
+    )
+
+    mode = st.radio(
+        "Choose your wish style",
+        ["💌 Emotional", "😂 Funny", "🪔 Traditional", "✍️ My Own Wish"]
+    )
+    message = mode
+    if mode == "✍️ My Own Wish":
+        message = st.text_area("Write your message")
+
+if st.button("Generate Magical Wish ✨"):
 
     if not name or not message:
         st.warning("Please fill all fields")
@@ -36,57 +101,49 @@ if st.button("Generate Wish ✨"):
         with st.spinner("Creating magic... ✨"):
 
             output = generate_wish(message, mode, recipient)
-            # save_data(name, message, output, mode, recipient)
             save_to_sheets(name, message, output, mode, recipient)
             image_path = create_wish_image(name, output, recipient)
 
-
-        st.success("Done! 🎉")
-
-        # st.write(f"👤 {name}")
-        # st.write(f"🎯 {recipient}")
-        # st.write(f"🎨 {mode}")
+        # st.success("Done! 🎉")
 
         if mode != "✍️ My Own Wish":
-            st.subheader("💖 Your AI Wish")
+            st.markdown("## 💖 Your Beautiful Wish")
             st.write(output)
 
         st.image(image_path, caption="✨ Your Wish Card")
 
-        # with open(image_path, "rb") as file:
-        #     st.download_button(
-        #         label="📥 Download Image",
-        #         data=file,
-        #         file_name=f"{name}_wish.png",
-        #         mime="image/png"
-        #     )
+        # 💖 Custom style for download button
+        st.markdown("""
+        <style>
+        /* Fix download button colors */
+        .stDownloadButton > button {
+            background-color: #ff4b6e !important; /* bright pink background */
+            color: white !important;              /* white text */
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            padding: 10px 18px;
+            font-size: 16px;
+        }
+        .stDownloadButton > button:hover {
+            background-color: #e8435f !important; /* slightly darker pink on hover */
+        }
+        </style>
+        """, unsafe_allow_html=True)
 
-        st.markdown("### 💖 Share your wish")
-        st.markdown("###### 📸 On Whatsapp / Upload to Instagram Story ✨")
+        # Single download button
+        with open(image_path, "rb") as file:
+            st.download_button(
+                label="📥 Download your wish image and share on Instagram or WhatsApp",
+                data=file,
+                file_name=f"{name}_wish.png",
+                mime="image/png"
+            )
 
-        # Encode text for WhatsApp
-        encoded_text = urllib.parse.quote(output)
+st.markdown("---")
 
-        whatsapp_url = f"https://wa.me/?text={encoded_text}"
-
-        # st.info("📸 Share on Whatsapp / Upload to Instagram Story ✨")
-
-        # Buttons layout
-        col1, col2 = st.columns(2)
-
-        with col1:
-            # st.link_button("📤 Share on WhatsApp", whatsapp_url)
-            whatsapp_image_path = os.path.join(BASE_DIR, "assets", "whatsapp.png")
-            st.image(whatsapp_image_path, width=80)
-            st.link_button("Share on WhatsApp", whatsapp_url)
-
-        with col2:
-            insta_image_path = os.path.join(BASE_DIR, "assets", "instagram.png")
-            st.image(insta_image_path, width=80)
-            with open(image_path, "rb") as file:
-                st.download_button(
-                    "Download for Instagram",
-                    data=file,
-                    file_name=f"{name}_wish.png",
-                    mime="image/png"
-                )
+st.markdown("""
+<p style='text-align: center; font-size: 14px;'>
+❤️ Loving ThaiAthai ✨
+</p>
+""", unsafe_allow_html=True)

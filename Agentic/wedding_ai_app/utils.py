@@ -6,6 +6,7 @@ from datetime import datetime
 from PIL import Image, ImageDraw, ImageFont
 import textwrap
 import streamlit as st
+import random
 
 client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -20,13 +21,13 @@ def generate_wish(message, mode, recipient):
         context = "for the couple"
 
     if mode == "💌 Emotional":
-        prompt = f"Write a heartfelt emotional wedding wish in 2-3 lines. Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
+        prompt = f"Write a heartfelt emotional wedding wish in 2-3 lines and without emojis. Replace Groom's Name with Shabu and Bride's name with Aishu {context}: {message}"
 
     elif mode == "😂 Funny":
-        prompt = f"Write a light funny wedding wish in 2-3 lines.Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
+        prompt = f"Write a light funny wedding wish in 2-3 lines and without emojis.Replace Groom's Name with Shabu and Bride's name with Aishu {context}: {message}"
 
     elif mode == "🪔 Traditional":
-        prompt = f"Write a traditional Indian wedding blessing in 2-3 lines.Replace Bride's Name with Aishu and Grooms name with Sabu {context}: {message}"
+        prompt = f"Write a traditional Indian wedding blessing in 2-3 lines and without emojis.Replace Groom's Name with Shabu and Bride's name with Aishu {context}: {message}"
 
     else:
         return message  # no AI
@@ -90,14 +91,15 @@ def save_to_sheets(name, message, output, mode, recipient):
     ])
 
 def create_wish_image(name, message, recipient):
+    number = random.randint(1, 2)
 
     # Select background
     if recipient == "👰 Bride":
-        bg_path = os.path.join(BASE_DIR, "assets", "bride.jpg")
+        bg_path = os.path.join(BASE_DIR, "assets", f"bride{number}.jpg")
     elif recipient == "🤵 Groom":
-        bg_path = os.path.join(BASE_DIR, "assets", "groom.jpg")
+        bg_path = os.path.join(BASE_DIR, "assets", f"groom{number}.jpg")
     else:
-        bg_path = os.path.join(BASE_DIR, "assets", "couple.jpg")
+        bg_path = os.path.join(BASE_DIR, "assets", f"couple{number}.jpg")
 
     img = Image.open(bg_path).convert("RGBA")
     img = img.resize((800, 1000))
@@ -107,10 +109,11 @@ def create_wish_image(name, message, recipient):
     img = Image.alpha_composite(img, overlay)
 
     draw = ImageDraw.Draw(img)
+    font_path = os.path.join(BASE_DIR, "assets", "GreatVibes-Regular.ttf")
 
     # Font
     try:
-        font = ImageFont.truetype("arial.ttf", 32)
+        font = ImageFont.truetype(font_path, 60)
     except:
         font = ImageFont.load_default()
 
