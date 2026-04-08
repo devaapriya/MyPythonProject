@@ -9,17 +9,6 @@ from utils import generate_wish, save_to_sheets, create_wish_image
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Hide Streamlit footer & menu
-hide_streamlit_style = """
-    <style>
-    /* Hide Streamlit footer */
-    footer {visibility: hidden;}
-    /* Hide hamburger menu */
-    #MainMenu {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
-
 def get_base64(file_path):
     with open(file_path, "rb") as f:
         return base64.b64encode(f.read()).decode()
@@ -31,6 +20,17 @@ st.set_page_config(
     page_icon="💍",
     layout="centered"
 )
+
+# Hide Streamlit footer & menu
+hide_streamlit_style = """
+    <style>
+    /* Hide Streamlit footer */
+    footer {visibility: hidden;}
+    /* Hide hamburger menu */
+    #MainMenu {visibility: hidden;}
+    </style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 
 # 🎨 Custom background
 st.markdown(f"""
