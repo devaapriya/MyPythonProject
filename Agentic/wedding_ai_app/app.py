@@ -22,15 +22,17 @@ st.set_page_config(
 )
 
 # Hide Streamlit footer & menu
-hide_streamlit_style = """
+st.markdown("""
     <style>
-    /* Hide Streamlit footer */
-    footer {visibility: hidden;}
-    /* Hide hamburger menu */
-    #MainMenu {visibility: hidden;}
+    /* Nuclear option - hides all Streamlit branding */
+    [data-testid="stToolbar"] {display: none !important;}
+    [data-testid="stDecoration"] {display: none !important;}
+    [data-testid="stStatusWidget"] {display: none !important;}
+    #MainMenu {visibility: hidden !important;}
+    footer {visibility: hidden !important;}
+    header {visibility: hidden !important;}
     </style>
-"""
-st.markdown(hide_streamlit_style, unsafe_allow_html=True)
+""", unsafe_allow_html=True)
 
 # 🎨 Custom background
 st.markdown(f"""
